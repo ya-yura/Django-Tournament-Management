@@ -6,15 +6,17 @@ from .models import Event
 
 @login_required
 def create_event(request):
-    if request.method == 'POST':
-        form = EventForm(request.POST)
-        if form.is_valid():
-            event = form.save()
-            return redirect('event_detail', event.id)
-    else:
-        form = EventForm()
-
-    return render(request, 'event/create_event.html', {'form': form})
+    template = 'event/create_event.html'
+    form = EventForm(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.author = request.user
+        obj.save()
+        return redirect('event:event_detail', obj.id)
+    context = {
+        'form': form,
+        'is_edit': False}
+    return render(request, template, context)
 
 
 def event_detail(request, pk):

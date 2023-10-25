@@ -21,15 +21,26 @@ class Team(models.Model):
         ordering = ('id',)
 
 
+SPORT_CHOICES = [
+    ('football', 'Футбол'),
+    ('basketball', 'Баскетбол'),
+    ('tennis', 'Теннис'),
+    # Добавьте другие виды спорта, которые вам необходимы
+]
+
+
 class Event(models.Model):
     name = models.CharField(_('Название мероприятия'), max_length=100)
     description = models.TextField(_('Описание мероприятия'))
     date = models.DateField(_('Дата мероприятия'))
     time = models.TimeField(_('Время мероприятия'))
-    sport_type = models.CharField(_('Тип спорта'), max_length=50)
+    sport_type = models.CharField(
+        _('Тип спорта'), max_length=50, choices=SPORT_CHOICES)
     location = models.CharField(_('Местоположение'), max_length=100)
     team_limit = models.PositiveIntegerField(_('Лимит команд'))
     slug = models.SlugField(_('Слаг'), unique=True, blank=True)
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, verbose_name=_('Организатор'))
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
