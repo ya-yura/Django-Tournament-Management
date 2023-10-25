@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Список мероприятий</h2>
+    <ul>
+        {% for event in events %}
+            <li>
+                <a href="/">{{ event.name }}</a>
+                <br>
+                Дата: {{ event.date }}<br>
+                Время: {{ event.time }}<br>
+                Тип спорта: {{ event.sport_type }}<br>
+                Местоположение: {{ event.location }}<br>
+            </li>
+        {% empty %}
+            <p>Нет доступных мероприятий.</p>
+        {% endfor %}
+    </ul>
+
+{% endblock %}

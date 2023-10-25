@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Детали мероприятия</h2>
+  <p><strong>Название:</strong> {{ event.name }}</p>
+  <p><strong>Описание:</strong> {{ event.description }}</p>
+  <p><strong>Дата:</strong> {{ event.date }}</p>
+  <p><strong>Время:</strong> {{ event.time }}</p>
+  <p><strong>Тип спорта:</strong> {{ event.sport_type }}</p>
+  <p><strong>Местоположение:</strong> {{ event.location }}</p>
+  <p><strong>Лимит команд:</strong> {{ event.team_limit }}</p>
+  <p><strong>Слаг:</strong> {{ event.slug }}</p>
+
+  {# Добавьте ссылку для возврата к списку мероприятий #}
+  <a href="/">Вернуться к списку мероприятий</a>
+</div>
+{% endblock %}
