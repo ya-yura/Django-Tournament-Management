@@ -11,7 +11,7 @@
           <a class="nav-link" href="{% url 'about:author' %}">О системе</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about:tech' %}">Турнирная сетка</a>
+          <a class="nav-link" href="{% url 'about:tech' %}">Создать команду</a>
         </li>
         {% if request.user.is_authenticated %}
         <li class="nav-item">
@@ -20,7 +20,7 @@
           {% endif %} 
         </li>
         <li class="nav-item"> 
-          <a class="nav-link link-light" href="{% url 'event:event_create' %}">Создать мероприятие</a>
+          <a class="nav-link" href="{% url 'event:event_create' %}">Создать мероприятие</a>
         </li>
         <li class="nav-item"> 
           <a class="nav-link link-light" href="{% url 'users:password_change' %}">Изменить пароль</a>

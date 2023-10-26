@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+import uuid
 
 
 class Team(models.Model):
@@ -10,6 +11,7 @@ class Team(models.Model):
     captain = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name=_('Капитан команды'))
     slug = models.SlugField(_('Слаг'), unique=True, blank=True)
+    invite_link = models.UUIDField(default=uuid.uuid4, unique=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
