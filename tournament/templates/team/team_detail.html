@@ -5,9 +5,6 @@
   <p><strong>Описание команды:</strong> {{ team.description }}</p>
   <p><strong>Капитан команды:</strong> {{ team.captain.username }}</p>
 
-  <a href="{% url 'team:join_team' team.invite_link %}">Присоединиться к команде</a>
-
-
   <h3>Члены команды:</h3>
   <ul>
     {% for member in members %}
@@ -16,4 +13,15 @@
       <li>В этой команде нет членов.</li>
     {% endfor %}
   </ul>  
+
+{% if is_member %}
+  <a class="button" href="{% url 'team:leave_team' team.id %}">Покинуть команду</a>
+{% else %}
+  <a class="button" href="{% url 'team:join_team' team.invite_link %}">Присоединиться к команде</a>
+{% endif %}
+<br>
+{% if request.user == team.captain %}
+    <a class="button" href="{% url 'team:delete_team' team.id %}">Удалить команду</a>
+{% endif %}
+
 {% endblock %}

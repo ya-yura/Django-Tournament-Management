@@ -17,7 +17,14 @@ class Team(models.Model):
     def save(self, *args, **kwargs):
         if not self.invite_link:
             self.invite_link = uuid.uuid4()
-        self.slug = slugify(self.name)
+        if not self.slug:
+            base_slug = slugify(self.name)
+            unique_slug = base_slug
+            i = 1
+            while Team.objects.filter(slug=unique_slug).exists():
+                unique_slug = f"{base_slug}-{i}"
+                i += 1
+            self.slug = unique_slug
         super().save(*args, **kwargs)
 
     class Meta:

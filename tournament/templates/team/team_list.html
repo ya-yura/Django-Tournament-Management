@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Список команд</h2>
+  <ul>
+    {% for team in teams %}
+      <li>
+        <h3><a href="{% url 'team:team_detail' team.id %}">{{ team.name }}</a></h3>
+        <p><strong>Описание команды:</strong> {{ team.description }}</p>
+        <p><strong>Капитан команды:</strong> {{ team.captain.username }}</p>
+        <p><strong>Количество членов:</strong> {{ team.members.count }}</p>
+
+        {% for member in team.members.all %}
+            {% if member.user.username == request.user.username %}
+                <a class="button" href="{% url 'team:leave_team' team.id %}">Покинуть команду</a>
+                {% with user_in_team=True %}
+                {% endwith %}
+            {% endif %}
+        {% empty %}
+            <li>В этой команде нет участников.</li>
+            {% with user_in_team=False %}
+            <a class="button" href="{% url 'team:join_team' team.invite_link %}">Присоединиться к команде</a>
+            {% endwith %}
+        {% endfor %}
+
+        <br>
+        {% if request.user == team.captain %}
+          <a class="button" href="{% url 'team:delete_team' team.id %}">Удалить команду</a>
+        {% endif %}
+      </li>
+    {% empty %}
+      <li>Нет доступных команд.</li>
+    {% endfor %}
+  </ul>
+  <a class="button" href="{% url 'team:create_team' %}">Создать новую команду</a>
+</div>
+
+<p>{{ request.user }}</p>
+
+
+{% endblock %}
