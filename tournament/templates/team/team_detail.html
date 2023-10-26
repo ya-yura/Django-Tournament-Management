@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Информация о команде "{{ team.name }}"</h2>
+  <p><strong>Описание команды:</strong> {{ team.description }}</p>
+  <p><strong>Капитан команды:</strong> {{ team.captain.username }}</p>
+
+  <a href="{% url 'team:join_team' team.invite_link %}">Присоединиться к команде</a>
+
+
+  <h3>Члены команды:</h3>
+  <ul>
+    {% for member in members %}
+      <li>{{ member.user.username }}</li>
+    {% empty %}
+      <li>В этой команде нет членов.</li>
+    {% endfor %}
+  </ul>  
+{% endblock %}

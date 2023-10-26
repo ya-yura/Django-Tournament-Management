@@ -2,25 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
-import uuid
-
-
-class Team(models.Model):
-    name = models.CharField(_('Название команды'), max_length=100)
-    description = models.TextField(_('Описание команды'))
-    captain = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name=_('Капитан команды'))
-    slug = models.SlugField(_('Слаг'), unique=True, blank=True)
-    invite_link = models.UUIDField(default=uuid.uuid4, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name = _('Команда')
-        verbose_name_plural = _('Команды')
-        ordering = ('id',)
 
 
 SPORT_CHOICES = [
@@ -67,19 +48,4 @@ class Tournament(models.Model):
     class Meta:
         verbose_name = _('Турнир')
         verbose_name_plural = _('Турниры')
-        ordering = ('id',)
-
-
-class Participant(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, verbose_name=_('Пользователь'))
-    team = models.ForeignKey(Team, on_delete=models.CASCADE,
-                             null=True, blank=True, verbose_name=_('Команда'))
-    event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, verbose_name=_('Мероприятие'))
-    rank = models.PositiveIntegerField(_('Ранг'), null=True, blank=True)
-
-    class Meta:
-        verbose_name = _('Участник')
-        verbose_name_plural = _('Участники')
         ordering = ('id',)
