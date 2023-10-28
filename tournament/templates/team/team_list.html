@@ -1,41 +1,58 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Список команд</h2>
-  <ul>
-    {% for team in teams %}
-      <li>
-        <h3><a href="{% url 'team:team_detail' team.id %}">{{ team.name }}</a></h3>
-        <p><strong>Описание команды:</strong> {{ team.description }}</p>
-        <p><strong>Капитан команды:</strong> {{ team.captain.username }}</p>
-        <p><strong>Количество членов:</strong> {{ team.members.count }}</p>
 
-        {% for member in team.members.all %}
-            {% if member.user.username == request.user.username %}
-                <a class="button" href="{% url 'team:leave_team' team.id %}">Покинуть команду</a>
-                {% with user_in_team=True %}
-                {% endwith %}
-            {% endif %}
-        {% empty %}
-            <li>В этой команде нет участников.</li>
-            {% with user_in_team=False %}
-            <a class="button" href="{% url 'team:join_team' team.invite_link %}">Присоединиться к команде</a>
-            {% endwith %}
-        {% endfor %}
+<h2>Список команд</h2>
 
-        <br>
-        {% if request.user == team.captain %}
-          <a class="button" href="{% url 'team:delete_team' team.id %}">Удалить команду</a>
-        {% endif %}
-      </li>
-    {% empty %}
-      <li>Нет доступных команд.</li>
-    {% endfor %}
-  </ul>
-  <a class="button" href="{% url 'team:create_team' %}">Создать новую команду</a>
+<div class="row">
+  {% for team in teams %}
+  <div class="col-md-4">
+    <div class="card mb-4 box-shadow">
+      <img
+        class="card-img-top"
+        data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail"
+        alt="Card image cap"/>
+      <div class="card-body">
+        <a href="{% url 'team:team_detail' team.pk %}"><h5 class="card-title">{{ team.name }}</h5></a>
+        <p class="card-text">
+          {{ team.description|linebreaksbr|truncatechars:300 }}
+        </p>
+        <div class="d-flex justify-content-between align-items-center">
+          {% for member in team.members.all %}
+          {% if member.user.username == request.user.username %}
+          <div class="btn-group">
+            <a
+              class="button btn btn-sm btn-primary"
+              href="{% url 'team:leave_team' team.id %}">Выйти</a>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              Edit
+            </button>
+          </div>
+          {% with user_in_team=True %} {% endwith %} {% endif %} {% empty %}
+          {% with user_in_team=False %}
+          <div class="btn-group">
+            <a
+              class="button btn btn-sm btn-primary"
+              href="{% url 'team:join_team' team.invite_link %}"
+              >Войти</a
+            >
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              Edit
+            </button>
+          </div>
+          {% endwith %} {% endfor %}
+          <small class="text-muted text-right">
+          {{ team.members.count }} чел.<br>
+          <strong>Капитан:</strong> {{ team.captain.username }}
+          </small>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <li>Нет доступных команд.</li>
+  {% endfor %}
 </div>
-
-<p>{{ request.user }}</p>
-
 
 {% endblock %}
