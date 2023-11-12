@@ -6,8 +6,12 @@ SECRET_KEY = '&w!eq-#7g+kj&@*$u#fs#g(o8g%203j%_lvkz(3tob6*g4ypq^'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'testserver',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -16,6 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
     'core',
     'about',
     'event',
@@ -93,18 +98,19 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'posts:index'
 # LOGOUT_REDIRECT_URL = 'posts:index'
 
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 #  подключаем движок filebased.EmailBackend
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'

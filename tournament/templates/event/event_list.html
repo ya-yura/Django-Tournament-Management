@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load thumbnail %}
 
 <h2>Список мероприятий</h2>
 
@@ -8,12 +9,13 @@
     {% for event in events %}
         <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-            <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-            <div class="card-img-overlay">
-           
-            </div>    
+                {% if event.cover %}
+                    <img class="card-img-top" src="{{ request.scheme }}://{{ request.get_host }}{{ event.cover.url }}" alt="{{ event.name|linebreaksbr|truncatechars:100 }}">
+                {% else %}
+                    <img class="card-img-top" src="{{ request.scheme }}://{{ request.get_host }}/media/events/01_1.jpg" alt="{{ event.name|linebreaksbr|truncatechars:100 }}">
+                {% endif %}
             <div class="card-body">
-            <a href="{% url 'event:event_detail' event.pk %}"><h5 class="card-title">{{ event.name }}</h5></a>
+            <a href="{% url 'event:event_detail' event.pk %}"><h5 class="card-title">{{ event.name|linebreaksbr|truncatechars:20 }}</h5></a>
             <p class="card-text">
             {{ event.description|linebreaksbr|truncatechars:300 }}
             </p>

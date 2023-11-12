@@ -4,7 +4,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
       <a class="navbar-brand" href="#">
         <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-        <span style="color:red">Champ</span>Core        
+        <span style="color:red">Ru</span>Champ        
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'event:event_list' %}">Мероприятия <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="{% url 'event:event_list' %}">Мероприятия <span class="sr-only">(28)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'team:team_list' %}">Команды</a>
@@ -23,16 +23,14 @@
           </li>
         {% if request.user.is_authenticated %}
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="http://example.com" id="actionslist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Создать</a>
+            <a class="nav-link dropdown-toggle" href="#" id="actionslist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Создать</a>
             <div class="dropdown-menu" aria-labelledby="actionslist">
               <a class="dropdown-item" href="{% url 'event:event_create' %}">Мероприятие</a>
               <a class="dropdown-item" href="{% url 'team:create_team' %}">Команду</a>
-              <a class="dropdown-item" href="#">Something else here</a>
             </div>
           </li>
         </ul>
         {% endif %}
-
 
         {% if request.user.is_authenticated %}
         <span class="nav-item dropdown">
@@ -52,74 +50,6 @@
         </li>
         {% endif %}
 
-
       </div>
     </nav>
   </header>
-
-
-
-
-
-
-
-
-<!--
-<header>
-  <nav class="navbar navbar-light navbar-expand-lg" style="background-color: lightskyblue">
-
-    <div class="container">
-      <a class="navbar-brand" href="{% url 'event:event_list' %}">
-        <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-        <span style="color:red">Champ</span>Core
-      </a>
-      <ul class="nav nav-pills">
-        <li class="nav-item"> 
-          <a class="nav-link" href="{% url 'about:author' %}">О системе</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'about:tech' %}">Создать команду</a>
-        </li>
-        {% if request.user.is_authenticated %}
-        <li class="nav-item">
-          {% if post.group %}  
-            <a href="{% url 'posts:group_list' post.group.slug %}">Команда</a>
-          {% endif %} 
-        </li>
-        <li class="nav-item"> 
-          <a class="nav-link" href="{% url 'event:event_create' %}">Создать мероприятие</a>
-        </li>
-        <li class="nav-item"> 
-          <a class="nav-link link-light" href="{% url 'users:password_change' %}">Изменить пароль</a>
-        </li>
-        <li class="nav-item"> 
-          <a class="nav-link link-light" href="{% url 'users:logout' %}">Выйти</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link link-light" href="{% url 'posts:profile' user.username %}"> Пользователь: {{ user.username }}</a>
-        </li>
-        {% else %}
-        <li class="nav-item"> 
-          <a class="nav-link link-light" href="{% url 'users:login' %}">Войти</a>
-        </li>
-        <li class="nav-item"> 
-          <a class="nav-link link-light" href="{% url 'users:signup' %}">Регистрация</a>
-        </li>
-        {% endif %}
-
-
-
-      </ul>
-
-              <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Создать</a>
-              <div class="dropdown-menu" aria-labelledby="dropdown09">
-                <a class="dropdown-item" href="#">Команду</a>
-                <a class="dropdown-item" href="#">Мероприятие</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-
-
-    </div>
-  </nav>      
-</header>
--->

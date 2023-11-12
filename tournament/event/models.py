@@ -24,9 +24,22 @@ class Event(models.Model):
     slug = models.SlugField(_('Слаг'), unique=True, blank=True)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name=_('Организатор'))
+    cover = models.ImageField(
+        upload_to='events/',
+        null=True,
+        blank=True,
+        help_text='Здесь вы можете загрузить обложку для мероприятия.'
+    )
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            base_slug = slugify(self.name)
+            unique_slug = base_slug
+            i = 1
+            while Event.objects.filter(slug=unique_slug).exists():
+                unique_slug = f"{base_slug}-{i}"
+                i += 1
+            self.slug = unique_slug
         super().save(*args, **kwargs)
 
     class Meta:
