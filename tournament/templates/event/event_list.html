@@ -15,14 +15,14 @@
                     <img class="card-img-top" src="{{ request.scheme }}://{{ request.get_host }}/media/events/01_1.jpg" alt="{{ event.name|linebreaksbr|truncatechars:100 }}">
                 {% endif %}
             <div class="card-body">
-            <a href="{% url 'event:event_detail' event.pk %}"><h5 class="card-title">{{ event.name|linebreaksbr|truncatechars:20 }}</h5></a>
+            <a href="{% url 'event:event_detail' event.slug %}"><h5 class="card-title">{{ event.name|linebreaksbr|truncatechars:20 }}</h5></a>
             <p class="card-text">
             {{ event.description|linebreaksbr|truncatechars:300 }}
             </p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <a href="{% url 'event:event_detail' event.pk %}" class="btn btn-sm btn-primary">Описание</a>
-                    <a href="{% url 'event:event_detail' event.pk %}" class="btn btn-sm btn-outline-secondary">Участвовать</a>
+                    <a href="{% url 'event:event_detail' event.slug %}" class="btn btn-sm btn-primary">Описание</a>
+                    <a href="{% url 'event:event_detail' event.slug %}" class="btn btn-sm btn-outline-secondary">Участвовать</a>
                 </div>
                 <small class="text-muted text-right">
                 {{ event.date }}<br>

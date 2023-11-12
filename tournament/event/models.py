@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
+from transliterate import translit
 
 
 SPORT_CHOICES = [
@@ -33,14 +34,20 @@ class Event(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base_slug = slugify(self.name)
-            unique_slug = base_slug
-            i = 1
-            while Event.objects.filter(slug=unique_slug).exists():
-                unique_slug = f"{base_slug}-{i}"
-                i += 1
-            self.slug = unique_slug
+            base_slug = slugify(translit(self.name, 'ru', reversed=True))
+            date_part = self.date.strftime("%Y%m%d")
+            sport_type_part = slugify(self.sport_type)
+            combined_slug = f"{base_slug}-{date_part}-{sport_type_part}"
+            self.slug = self.get_unique_slug(combined_slug)
         super().save(*args, **kwargs)
+
+    def get_unique_slug(self, base_slug):
+        unique_slug = base_slug
+        i = 1
+        while Event.objects.filter(slug=unique_slug).exists():
+            unique_slug = f"{base_slug}-{i}"
+            i += 1
+        return unique_slug
 
     class Meta:
         verbose_name = _('Мероприятие')
